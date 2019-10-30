@@ -1,4 +1,4 @@
-# -*- mode: org; coding: utf-8 -*-
+# -*- mode: org; coding: utf-8-unix -*-
 
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/htmlize.css"/>
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/readtheorg.css"/>
@@ -124,9 +124,11 @@ Fonts I like:
 - Cantarell (not fixed width)
 
 #+BEGIN_SRC emacs-lisp
-  (let ((preferred-font "PragmataPro-11"))
-    (set-frame-font preferred-font t t)
-    (add-to-list 'default-frame-alist  (cons 'font preferred-font)))
+  (let ((preferred-font "PragmataPro")
+        (preferred-size "12"))
+    (when (member preferred-font (font-family-list))
+      (set-frame-font (concat preferred-font "-" preferred-size) t t)
+      (add-to-list 'default-frame-alist  (cons 'font (concat preferred-font "-" preferred-size)))))
 #+END_SRC
 *** Theme
 Due to the amount of sunlight I prefer to have a lighter theme at work.
