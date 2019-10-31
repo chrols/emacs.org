@@ -500,6 +500,12 @@ Does not appear to play well with some themes
       :init (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
 #+END_SRC
 
+** Winner Mode
+Winner mode is a global minor mode that adds undo / redo for Emacs
+window changes.
+#+BEGIN_SRC emacs-lisp
+  (winner-mode)
+#+END_SRC
 * Utility functions
 ** Narrowing
 #+BEGIN_SRC emacs-lisp
