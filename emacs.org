@@ -659,6 +659,14 @@ to instruct the lisp replacement to sort the directories first.
   (when (eq system-type 'gnu/linux)
     (setq dired-listing-switches "-lXGh --group-directories-first"))
 #+END_SRC
+** GNU Global (gtags)
+If I am on Windows and not in a work context gtags will be unavailable by default. Add [[https://www.gnu.org/software/global/][GNU Global]] to path.
+#+BEGIN_SRC emacs-lisp
+  (when (and (windows-p) (not (work-computer-p)))
+    (setq load-path (cons "C:/bin/gtags/share/gtags/" load-path))
+    (autoload 'gtags-mode "gtags" "" t)
+    (setq gtags-global-command "c:/bin/gtags/bin/global.exe"))
+#+END_SRC
 * Programming modes
 Configuration specific to the various programming modes.
 ** Common
