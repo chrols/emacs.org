@@ -89,6 +89,10 @@ Load work specific stuff from a separate file.
       (org-babel-load-file "~/org/emacs/work.org"))
 #+END_SRC
 * Common configuration
+** More GC memory
+#+BEGIN_SRC emacs-lisp
+(setq gc-cons-threshold 200000000)
+#+END_SRC
 ** Appearence
 *** Disable default fluff
 I find the menu bar of some utility when running Emacs in a window,
@@ -418,6 +422,11 @@ Magit is a great way to interact with git within Emacs. Manual available [[https
            (range (concat "-L " (number-to-string begin) "," (number-to-string end) ":" (buffer-file-name))))
       (magit-log-current '("HEAD") (list range "-n256"))
       (setf (nth 1 magit-refresh-args) old-args)))
+#+END_SRC
+*** Performance
+Should improve Emacs performance.
+#+BEGIN_SRC emacs-lisp
+  (setq vc-handled-backends nil)
 #+END_SRC
 ** Neotree
 #+BEGIN_SRC emacs-lisp
