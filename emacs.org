@@ -259,6 +259,7 @@ modifiers.
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-c a") 'org-agenda)
   (global-set-key (kbd "C-c u") 'ace-jump-mode)
+  (global-set-key (kbd "C-c l")  'org-store-link)
 #+END_SRC
 ** Kill this buffer
 Typically I have focus on the buffer I want to kill.
@@ -516,6 +517,9 @@ Does not appear to play well with some themes
 ** Winner Mode
 Winner mode is a global minor mode that adds undo / redo for Emacs
 window changes.
+
+Default shortcuts: ~C-c <left>~ and ~C-c <right>~
+
 #+BEGIN_SRC emacs-lisp
   (winner-mode)
 #+END_SRC
