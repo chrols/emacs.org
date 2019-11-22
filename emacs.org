@@ -31,6 +31,10 @@ install it manually with ~M-x list-packages~.
 
   (defun windows-p ()
     (eq system-type 'windows-nt))
+
+  (defun configura-buffer-p ()
+    (or (string= (file-name-extension buffer-file-name) "cm")
+        (string= (file-name-extension buffer-file-name) "m")))
 #+END_SRC
 ** straight.el
 #+BEGIN_SRC emacs-lisp
@@ -215,13 +219,13 @@ Typically I work with an SCM and do not find the backup files particularly helpf
 #+END_SRC
 
 ** No trailing whitespace
-I do not want any trailing whitespace. That said CM code is littered
+I do not want any trailing whitespace. That said, Configura code is littered
 with it. Having it enabled will result in noisy commits.
 #+BEGIN_SRC emacs-lisp
   (add-hook
    'before-save-hook
    (lambda ()
-     (unless (string= (file-name-extension buffer-file-name) "cm")
+     (unless (configura-buffer-p)
        (delete-trailing-whitespace))))
 #+END_SRC
 ** Custom
@@ -809,7 +813,7 @@ Configuration specific to the various programming modes.
       :commands clang-format-buffer
       :init
       (add-hook 'before-save-hook (lambda ()
-                                    (when (eq major-mode 'c++-mode)
+                                    (when (and (eq major-mode 'c++-mode) (not (configura-buffer-p)))
                                       (clang-format-buffer))))
       (setq clang-format-style-option "file"))
 #+END_SRC
