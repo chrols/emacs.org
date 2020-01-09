@@ -54,23 +54,6 @@ install it manually with ~M-x list-packages~.
   (straight-use-package 'use-package)
   (setq straight-use-package-by-default t)
 #+END_SRC
-** Package repositories
-Add [[https://melpa.org/][MELPA]] and [[https://orgmode.org/][org-mode]] archives to ~package-archives~.
-
-#+BEGIN_SRC emacs-lisp
-  (unless (windows-p)
-    (add-to-list 'load-path "/usr/share/emacs/site-lisp/"))
-
-  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-  (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
-
-  ;; In case ELPA or MELPA is down the following mirror can be used:
-
-  ;; (setq package-archives
-  ;;       '(("melpa" . "https://raw.githubusercontent.com/d12frosted/elpa-mirror/master/melpa/")
-  ;;         ("org"   . "https://raw.githubusercontent.com/d12frosted/elpa-mirror/master/org/")
-  ;;         ("gnu"   . "https://raw.githubusercontent.com/d12frosted/elpa-mirror/master/gnu/")))
-#+END_SRC
 ** use-package
 [[https://github.com/jwiegley/use-package][use-package]] is used throughout this configuration.
 
