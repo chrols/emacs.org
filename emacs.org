@@ -304,7 +304,7 @@ guaranteed to be free.
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "<f2>") 'powershell)
   (global-set-key (kbd "<S-f2>") 'eshell)
-  (global-set-key (kbd "<f4>") 'ff-find-other-file)
+  (global-set-key (kbd "<f4>") 'projectile-find-other-file)
   (global-set-key (kbd "<f5>")
                   (lambda () (interactive) (if (string= (file-name-extension buffer-file-name) "cm")
                                              (cm-compilation-interact-load)
