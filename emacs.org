@@ -201,6 +201,10 @@ Typically I work with an SCM and do not find the backup files particularly helpf
   (setq auto-save-default nil) ;;disable auto save
 #+END_SRC
 
+** No bell
+#+BEGIN_SRC emacs-lisp
+(setq ring-bell-function 'ignore)
+#+END_SRC
 ** No trailing whitespace
 I do not want any trailing whitespace. That said, Configura code is littered
 with it. Having it enabled will result in noisy commits.
