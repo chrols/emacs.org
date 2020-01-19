@@ -1008,6 +1008,12 @@ Haskell mode. Mainly used for modifying my [[https://xmonad.org/][xmonad]] confi
 
 #+END_SRC
 
+** Typescript
+#+BEGIN_SRC emacs-lisp
+  (use-package typescript-mode
+    :mode (("\\.ts\\'" . typescript-mode)
+           ("\\.tsx\\'" . typescript-mode)))
+#+END_SRC
 * Other major modes
 ** org-mode
 *** Configuration
