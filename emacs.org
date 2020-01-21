@@ -306,7 +306,9 @@ The hyper modifier is typically unused by most modes.
 According to the Emacs [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html][conventions]] only function key f5-f9 are
 guaranteed to be free.
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "<f2>") 'powershell)
+  (if (windows-p)
+      (global-set-key (kbd "<f2>") 'powershell)
+    (global-set-key (kbd "<f2>") 'eshell))
   (global-set-key (kbd "<S-f2>") 'eshell)
   (global-set-key (kbd "<f4>") 'projectile-find-other-file)
   (global-set-key (kbd "<f5>")
