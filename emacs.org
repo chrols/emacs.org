@@ -27,14 +27,11 @@ install it manually with ~M-x list-packages~.
 ** Context
 #+BEGIN_SRC emacs-lisp
   (defun work-computer-p ()
-    (getenv "CM_HOME"))
+    (string= (system-name) "ubuntu-tmgcxo"))
 
   (defun windows-p ()
     (eq system-type 'windows-nt))
 
-  (defun configura-buffer-p ()
-    (or (string= (file-name-extension buffer-file-name) "cm")
-        (string= (file-name-extension buffer-file-name) "m")))
 #+END_SRC
 ** straight.el
 #+BEGIN_SRC emacs-lisp
@@ -206,13 +203,13 @@ Typically I work with an SCM and do not find the backup files particularly helpf
 (setq ring-bell-function 'ignore)
 #+END_SRC
 ** No trailing whitespace
-I do not want any trailing whitespace. That said, Configura code is littered
-with it. Having it enabled will result in noisy commits.
+I do not want any trailing whitespace. That said, work code is littered
+with it. Having it enabled will result in "unnecessary" commits.
 #+BEGIN_SRC emacs-lisp
   (add-hook
    'before-save-hook
    (lambda ()
-     (unless (configura-buffer-p)
+     (unless (work-computer-p)
        (delete-trailing-whitespace))))
 #+END_SRC
 ** Custom
@@ -354,8 +351,6 @@ dependency and offers a wgrep mode.
                   (setq rg-executable "c:/bin/rg.exe"))))
 #+END_SRC
 ** Flycheck
-Use flycheck unless we are in a Configura context.
-
 Add a hook to force flycheck to always use C++11 support. We use the Clang language backend so this
 is set to clang.
 
