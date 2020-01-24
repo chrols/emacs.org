@@ -212,6 +212,10 @@ with it. Having it enabled will result in "unnecessary" commits.
      (unless (work-computer-p)
        (delete-trailing-whitespace))))
 #+END_SRC
+** Increase what is considered a large file
+#+BEGIN_SRC emacs-lisp
+(setq large-file-warning-threshold (* 100 1000 1000))
+#+END_SRC
 ** Custom
 Keep custom settings in a separate file.
 #+BEGIN_SRC emacs-lisp
