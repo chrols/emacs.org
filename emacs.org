@@ -70,7 +70,7 @@ prefer that they are installed. This behavior can be overridden by
 Load work specific stuff from a separate file.
 #+BEGIN_SRC emacs-lisp
   (if (work-computer-p)
-      (org-babel-load-file "~/org/emacs/work.org"))
+      (org-babel-load-file "~/.emacs-work.org"))
 #+END_SRC
 * Common configuration
 ** More GC memory
@@ -295,9 +295,7 @@ The hyper modifier is typically unused by most modes.
 
   ;; Function keys
   (global-set-key (kbd "H-<f5>")  '(lambda () (interactive) (find-file
-                                                        (if (work-computer-p)
-                                                            "C:/projects/emacs-org/emacs.org"
-                                                          "~/projects/emacs-org/emacs.org"))))
+                                                          "~/projects/emacs.org/emacs.org")))
 
   (global-set-key (kbd "H-<f11>")  '(lambda () (interactive) (find-file "~/org/work-todo.org")))
   (global-set-key (kbd "H-<f12>")  '(lambda () (interactive) (find-file "~/org/todo.org")))
