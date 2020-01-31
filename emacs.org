@@ -66,12 +66,6 @@ prefer that they are installed. This behavior can be overridden by
 
 ~use-package~ is now provided by straight.el.
 
-** Work setup
-Load work specific stuff from a separate file.
-#+BEGIN_SRC emacs-lisp
-  (if (work-computer-p)
-      (org-babel-load-file "~/.emacs-work.org"))
-#+END_SRC
 * Common configuration
 ** More GC memory
 #+BEGIN_SRC emacs-lisp
@@ -1200,14 +1194,6 @@ Based on the guide [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd
   (require 'ispell)
 #+END_SRC
 
-* Secrets
-Stuff I do not want to be public (API-keys, etc) is placed in a
-seperate secret.el.
-#+BEGIN_SRC emacs-lisp
-  (if (file-exists-p "~/org/emacs/secrets.org")
-      (org-babel-load-file "~/org/emacs/secrets.org"))
-#+END_SRC
-
 * LSP
 ** Common
 [[https://github.com/emacs-lsp/lsp-mode][lsp-mode]] is a client for the language server protocol. It provides
@@ -1238,3 +1224,19 @@ Configuration from: [[https://www.sandeepnambiar.com/setting-up-emacs-for-c++/][
              (lambda () (require 'ccls) (lsp)))))
 #+END_SRC
 
+* External
+Additional custom elisp code to load that should not be published.
+** Work setup
+Load work specific stuff that is not interesting or appropriate to
+publish from a separate file.
+#+BEGIN_SRC emacs-lisp
+  (if (work-computer-p)
+      (org-babel-load-file "~/.emacs-work.org"))
+#+END_SRC
+** Secrets
+Stuff I do not want to be public (API-keys, etc) is placed in a
+seperate secret.el.
+#+BEGIN_SRC emacs-lisp
+  (if (file-exists-p "~/org/emacs/secrets.org")
+      (org-babel-load-file "~/org/emacs/secrets.org"))
+#+END_SRC
