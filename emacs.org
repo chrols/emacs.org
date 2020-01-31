@@ -1207,3 +1207,34 @@ seperate secret.el.
   (if (file-exists-p "~/org/emacs/secrets.org")
       (org-babel-load-file "~/org/emacs/secrets.org"))
 #+END_SRC
+
+* LSP
+** Common
+[[https://github.com/emacs-lsp/lsp-mode][lsp-mode]] is a client for the language server protocol. It provides
+many IDE-like features.
+
+Configuration from: [[https://www.sandeepnambiar.com/setting-up-emacs-for-c++/][Emacs setup for C++]]
+#+BEGIN_SRC emacs-lisp
+(unless (work-computer-p)
+  (use-package lsp-mode :commands lsp :ensure t)
+  (use-package lsp-ui :commands lsp-ui-mode :ensure t)
+  (use-package company-lsp
+      :ensure t
+      :commands company-lsp
+      :config
+      (push 'company-lsp company-backends) ;; add company-lsp as a backend
+      (setq lsp-keymap-prefix (kbd "H-l")))
+#+END_SRC
+** CCLS
+[[https://github.com/MaskRay/emacs-ccls][emacs-ccls]] is a client for [[https://github.com/MaskRay/ccls][ccls]], which is a language server for C/C++.
+#+BEGIN_SRC emacs-lisp
+  (use-package ccls
+      :ensure t
+      :config
+      (setq ccls-executable "ccls")
+      (setq lsp-prefer-flymake nil)
+      (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+      :hook ((c-mode c++-mode objc-mode) .
+             (lambda () (require 'ccls) (lsp)))))
+#+END_SRC
+
