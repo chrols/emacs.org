@@ -1140,6 +1140,19 @@ Based on the guide [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd
   (global-set-key (kbd "H-t") 'chr-add-todo)
 #+END_SRC
 
+*** Keep previous easy templates
+#+begin_src emacs-lisp
+(require 'org-tempo)
+#+end_src
+*** Save after refile
+#+begin_src emacs-lisp
+  (advice-add 'org-refile :after 'org-save-all-org-buffers)
+#+end_src
+*** Additional exports
+MediaWiki export for authoring content for MediaWiki wikis.
+#+begin_src emacs-lisp
+  (use-package ox-mediawiki)
+#+end_src
 ** AUCTeX
 
 #+BEGIN_SRC emacs-lisp
