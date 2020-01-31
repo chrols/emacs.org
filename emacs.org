@@ -905,12 +905,6 @@ Configuration specific to the various programming modes.
 
 #+END_SRC
 ** Python
-*** Interpreter
-#+BEGIN_SRC emacs-lisp
-  (when (work-computer-p)
-    (setq python-shell-interpreter "C:/Users/chrol/AppData/Local/Programs/Python/Python37-32/python.exe")
-    (setq python-shell-completion-native-disabled-interpreters '("python")))
-#+END_SRC
 *** IDE
 #+BEGIN_SRC emacs-lisp
 ;;; package --- python configs
