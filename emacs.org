@@ -125,10 +125,10 @@ Some themes I like:
 
 #+BEGIN_SRC emacs-lisp
   (if (work-computer-p)
-      (use-package solarized-theme
+      (use-package spacemacs-theme
           :defer t
           :init
-          (load-theme 'solarized-light t))
+          (load-theme 'spacemacs-dark t))
     (use-package spacemacs-theme
         :defer t
         :init
