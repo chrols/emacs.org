@@ -763,67 +763,9 @@ Configuration specific to the various programming modes.
       (setq c-default-style "linux") ;; set style to "linux"
       (setq gdb-many-windows t ;; use gdb-many-windows by default
             gdb-show-main t))
-
-  (use-package semantic
-      :if (not (work-computer-p))
-      :config
-      (global-semanticdb-minor-mode 1)
-      (global-semantic-idle-scheduler-mode 1)
-      (global-semantic-stickyfunc-mode 1)
-      (semantic-mode 1))
-
-  (use-package ede
-      :if (not (work-computer-p))
-      :config
-      ;; Enable EDE only in C/C++
-      (global-ede-mode))
-
-  (use-package ggtags
-      :if (not (work-computer-p))
-      :config
-      (ggtags-mode 1)
-      (add-hook 'c-mode-common-hook
-                (lambda ()
-                  (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
-                    (ggtags-mode 1))))
-
-      (dolist (map (list ggtags-mode-map))
-        (define-key map (kbd "C-c g s") 'ggtags-find-other-symbol)
-        (define-key map (kbd "C-c g h") 'ggtags-view-tag-history)
-        (define-key map (kbd "C-c g r") 'ggtags-find-reference)
-        (define-key map (kbd "C-c g f") 'ggtags-find-file)
-        (define-key map (kbd "C-c g c") 'ggtags-create-tags)
-        (define-key map (kbd "C-c g u") 'ggtags-update-tags)
-        (define-key map (kbd "M-.")     'ggtags-find-tag-dwim)
-        (define-key map (kbd "M-,")     'pop-tag-mark)
-        (define-key map (kbd "C-c <")   'ggtags-prev-mark)
-        (define-key map (kbd "C-c >")   'ggtags-next-mark)))
-
-  ;; company-c-headers
-  ;; (use-package company-c-headers
-  ;;  :init
-  ;;  (add-to-list 'company-backends 'company-c-headers))
-
-  (use-package cc-mode
-      :if (not (work-computer-p))
-      :init
-      (define-key c-mode-map  [(tab)] 'company-complete)
-      (define-key c++-mode-map  [(tab)] 'company-complete))
-
-  ;; git@github.com:syohex/emacs-counsel-gtags.git
-                                          ;(use-package counsel-gtags
-                                          ;  :load-path "vendor/emacs-counsel-gtags/"
-                                          ;  :ensure nil
-                                          ;  :config
-                                          ;  (add-hook 'c-mode-hook 'counsel-gtags-mode)
-                                          ;  (add-hook 'c++-mode-hook counsel-gtags-mode)
-                                          ;
-                                          ;  (with-eval-after-load 'counsel-gtags
-                                          ;    (define-key counsel-gtags-mode-map (kbd "M-t") 'counsel-gtags-find-definition)
-                                          ;    ;(define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
-                                          ;    ;(define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
-                                          ;    (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-pop-stack)))
-
+#+END_SRC
+*** Code folding
+#+BEGIN_SRC emacs-lisp
   (defun alexott/cedet-hook ()
     (local-set-key (kbd "C-c C-j") 'semantic-ia-fast-jump)
     (local-set-key (kbd "C-c C-s") 'semantic-ia-show-summary))
@@ -833,12 +775,9 @@ Configuration specific to the various programming modes.
   (add-hook 'c-mode-common-hook 'alexott/cedet-hook)
   (add-hook 'c-mode-hook 'alexott/cedet-hook)
   (add-hook 'c++-mode-hook 'alexott/cedet-hook)
-
 #+END_SRC
-
 *** Custom
 #+BEGIN_SRC emacs-lisp
-  (setq c-basic-offset 4)
 
   (setq ff-search-directories
         '("." "../src" "../include"))
@@ -1211,15 +1150,30 @@ many IDE-like features.
 
 Configuration from: [[https://www.sandeepnambiar.com/setting-up-emacs-for-c++/][Emacs setup for C++]]
 #+BEGIN_SRC emacs-lisp
-(unless (work-computer-p)
-  (use-package lsp-mode :commands lsp :ensure t)
+  (use-package lsp-mode
+    ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+    :init (setq lsp-keymap-prefix "C-c n")
+    :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+           (typescript-mode . lsp-deferred)
+           (python-mode . lsp-deferred)
+           (shell-mode . lsp-deferred)
+           ;; if you want which-key integration
+           (lsp-mode . lsp-enable-which-key-integration))
+    :commands (lsp lsp-deferred))
+
   (use-package lsp-ui :commands lsp-ui-mode :ensure t)
+
+  (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+
+  (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+
+  (use-package dap-mode)
+
   (use-package company-lsp
-      :ensure t
-      :commands company-lsp
-      :config
-      (push 'company-lsp company-backends) ;; add company-lsp as a backend
-      (setq lsp-keymap-prefix (kbd "H-l")))
+    :ensure t
+    :commands company-lsp
+    :config
+    (push 'company-lsp company-backends)) ;; add company-lsp as a backend
 #+END_SRC
 ** CCLS
 [[https://github.com/MaskRay/emacs-ccls][emacs-ccls]] is a client for [[https://github.com/MaskRay/ccls][ccls]], which is a language server for C/C++.
@@ -1231,7 +1185,7 @@ Configuration from: [[https://www.sandeepnambiar.com/setting-up-emacs-for-c++/][
       (setq lsp-prefer-flymake nil)
       (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
       :hook ((c-mode c++-mode objc-mode) .
-             (lambda () (require 'ccls) (lsp)))))
+             (lambda () (require 'ccls) (lsp))))
 #+END_SRC
 
 * External
