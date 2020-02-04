@@ -1204,3 +1204,6 @@ seperate secret.el.
   (if (file-exists-p "~/org/emacs/secrets.org")
       (org-babel-load-file "~/org/emacs/secrets.org"))
 #+END_SRC
+#+begin_src emacs-lisp
+(setq magit-log-margin '(t "%Y-%m-%d" magit-log-margin-width t 18))
+#+end_src
