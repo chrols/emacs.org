@@ -844,13 +844,16 @@ Configuration specific to the various programming modes.
         '("." "../src" "../include"))
 #+END_SRC
 *** clang-format on save
+Keep C++ files formatted, except at work where there is consistent
+inconsistency.
 #+BEGIN_SRC emacs-lisp
   (use-package clang-format
       :if (not (work-computer-p))
       :commands clang-format-buffer
       :init
       (add-hook 'before-save-hook (lambda ()
-                                    (when (and (eq major-mode 'c++-mode) (not (configura-buffer-p)))
+                                    (when (and (eq major-mode 'c++-mode)
+                                               (not (work-computer-p)))
                                       (clang-format-buffer))))
       (setq clang-format-style-option "file"))
 #+END_SRC
