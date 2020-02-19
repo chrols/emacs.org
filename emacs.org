@@ -1021,7 +1021,7 @@ Based on the guide [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd
 
   (setq org-refile-targets '(("~/org/gtd/next.org" :level . 1)
                              ("~/org/gtd/waiting.org" :maxlevel . 1)
-                             ("~/org/gtd/projects.org" :maxlevel . 1)
+                             ("~/org/gtd/projects.org" :maxlevel . 2)
                              ("~/org/gtd/calendar.org" :maxlevel . 2)
                              ("~/org/gtd/someday.org" :level . 1)
                              ("~/org/gtd/done.org" :level . 1)))
@@ -1029,17 +1029,20 @@ Based on the guide [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd
   (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
   (setq org-log-done 'time)
   (setq org-agenda-custom-commands
-        '(("w" "At work" tags-todo "@work"
+        '(("n" "Next" tags-todo "next"
+           ((org-agenda-overriding-header "Next Action")))
+          ("c" "Code" tags-todo "code"
+           ((org-agenda-overriding-header "Code tasks")))
+          ("r" "R&R" tags-todo "research"
+           ((org-agenda-overriding-header "Read & research")))
+          ("w" "At work" tags-todo "@work|epiroc|castra"
            ((org-agenda-overriding-header "Work TODO")))
           ("h" "At home" tags-todo "-@work&-fun"
            ((org-agenda-overriding-header "Home TODO")))
+          ("u" "Untagged" tags-todo "-{.*}"
+           ((org-agenda-overriding-header "Untagged")))
           ("f" "Fun" tags-todo "fun"
-           ((org-agenda-overriding-header "Home TODO")))))
-
-
-
-
-
+           ((org-agenda-overriding-header "Fun")))))
 #+END_SRC
 *** Custom functions
 #+BEGIN_SRC emacs-lisp
