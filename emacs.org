@@ -309,6 +309,11 @@ guaranteed to be free.
                                               (recompile))))
   (global-set-key (kbd "<f11>") 'toggle-frame-fullscreen)
 #+END_SRC
+** XREF
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "M-i") 'xref-find-definitions)
+  (global-set-key (kbd "M-s-i") 'xref-pop-marker-stack)
+#+END_SRC
 * Minor modes
 ** Smex
 "Smex is a M-x enhancement for Emacs, it provides a convenient interface to your recently and most
