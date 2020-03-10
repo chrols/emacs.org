@@ -1092,6 +1092,14 @@ MediaWiki export for authoring content for MediaWiki wikis.
 #+begin_src emacs-lisp
   (use-package ox-mediawiki)
 #+end_src
+*** Periodically save
+I frequently forget to save my org files which is frustrating since
+they then will not sync to my different machines.
+
+Solve this by periodically saving all org files.
+#+BEGIN_SRC emacs-lisp
+  (run-with-timer 0 (* 30 60) 'org-save-all-org-buffers)
+#+END_SRC
 ** AUCTeX
 
 #+BEGIN_SRC emacs-lisp
