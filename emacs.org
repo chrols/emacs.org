@@ -788,17 +788,18 @@ Configuration specific to the various programming modes.
         '("." "../src" "../include"))
 #+END_SRC
 *** clang-format on save
-Keep C++ files formatted, except at work where there is consistent
-inconsistency.
+Apply clang-format on my personal projects when saving to keep them
+consistently consistent.
+
+At work where there is consistent inconsistency only format my
+modifications to not introduce "uneccesary" changes.
+
+[[https://github.com/SavchenkoValeriy/emacs-clang-format-plus][clang-format+]] makes this behavior easy.
 #+BEGIN_SRC emacs-lisp
-  (use-package clang-format
-      :if (not (work-computer-p))
-      :commands clang-format-buffer
+  (use-package clang-format+
+      :hook (c++-mode c-mode)
       :init
-      (add-hook 'before-save-hook (lambda ()
-                                    (when (and (eq major-mode 'c++-mode)
-                                               (not (work-computer-p)))
-                                      (clang-format-buffer))))
+      (setq clang-format+-context (if (work-computer-p) 'modification 'buffer))
       (setq clang-format-style-option "file"))
 #+END_SRC
 ** Rust
