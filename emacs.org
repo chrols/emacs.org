@@ -1107,7 +1107,8 @@ Based on the guide [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd
 
 *** Keep previous easy templates
 #+begin_src emacs-lisp
-(require 'org-tempo)
+  (if (> emacs-major-version 26)
+      (require 'org-tempo))
 #+end_src
 *** Save after refile
 #+begin_src emacs-lisp
