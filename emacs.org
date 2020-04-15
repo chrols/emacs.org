@@ -124,15 +124,10 @@ Some themes I like:
 - zenburn
 
 #+BEGIN_SRC emacs-lisp
-  (if (work-computer-p)
-      (use-package spacemacs-theme
+      (use-package material-theme
           :defer t
           :init
-          (load-theme 'spacemacs-dark t))
-    (use-package spacemacs-theme
-        :defer t
-        :init
-        (load-theme 'spacemacs-dark t)))
+          (load-theme 'material t))
 #+END_SRC
 *** Prettify symbols
 
