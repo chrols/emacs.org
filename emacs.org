@@ -244,8 +244,16 @@ Time track my different projects
       :ensure t
       :config
       (setq wakatime-api-key (read-wakatime-api-key))
-      (setq wakatime-cli-path "/usr/local/bin/wakatime")
+      (when (file-exists-p "/usr/bin/wakatime")
+        (setq wakatime-cli-path "/usr/bin/wakatime"))
+      (when (file-exists-p "/usr/local/bin/wakatime")
+        (setq wakatime-cli-path "/usr/local/bin/wakatime"))
       (global-wakatime-mode))
+
+  (if (and (not (work-computer-p))
+           (not (file-exists-p "~/.wakatime")))
+      (warn "Wakatime API key file not found"))
+
 #+END_SRC
 * Shortcuts
 Global shortcuts I find handy. The Emacs [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html][convention]] reserves ~C-c
