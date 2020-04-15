@@ -1026,6 +1026,7 @@ Based on the guide [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd
 
   (setq org-agenda-files '("~/org/gtd/inbox.org"
                            "~/org/gtd/next.org"
+                           "~/org/gtd/habits.org"
                            "~/org/gtd/waiting.org"
                            "~/org/gtd/projects.org"
                            "~/org/gtd/calendar.org"))
@@ -1041,6 +1042,7 @@ Based on the guide [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd
                                  "* %i%? \n %U")))
 
   (setq org-refile-targets '(("~/org/gtd/next.org" :level . 1)
+                             ("~/org/gtd/habits.org" :maxlevel . 1)
                              ("~/org/gtd/waiting.org" :maxlevel . 1)
                              ("~/org/gtd/projects.org" :maxlevel . 2)
                              ("~/org/gtd/calendar.org" :maxlevel . 2)
@@ -1052,6 +1054,10 @@ Based on the guide [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd
   (setq org-agenda-custom-commands
         '(("n" "Next" tags-todo "next"
            ((org-agenda-overriding-header "Next Action")))
+          ("i" "Inbox" tags-todo "inbox"
+           ((org-agenda-overriding-header "Inboxk tasks")))
+          ("h" "Code" tags-todo "habit"
+           ((org-agenda-overriding-header "Habit tasks")))
           ("c" "Code" tags-todo "code"
            ((org-agenda-overriding-header "Code tasks")))
           ("r" "R&R" tags-todo "research"
