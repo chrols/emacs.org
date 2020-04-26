@@ -1025,19 +1025,13 @@ Haskell mode. Mainly used for modifying my [[https://xmonad.org/][xmonad]] confi
     :mode (("\\.ts\\'" . typescript-mode)
            ("\\.tsx\\'" . typescript-mode)))
 #+END_SRC
-* Other major modes
-** org-mode
-*** Configuration
-Based on the guide [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html][Orgmode for GTD]].
+* org-mode
+GTD flow.
+
+Configuration and flow mostly lifted from [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html][Orgmode for GTD]] and this [[http://cachestocaches.com/2020/3/my-organized-life/][blog post]].
+** Configuration
 #+BEGIN_SRC emacs-lisp
   (require 'org)
-
-  (setq org-agenda-files '("~/org/gtd/inbox.org"
-                           "~/org/gtd/next.org"
-                           "~/org/gtd/habits.org"
-                           "~/org/gtd/waiting.org"
-                           "~/org/gtd/projects.org"
-                           "~/org/gtd/calendar.org"))
 
   (setq org-capture-templates '(("t" "TODO" entry
                                  (file+headline "~/org/gtd/inbox.org" "Tasks")
@@ -1049,22 +1043,13 @@ Based on the guide [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd
                                  (file+headline "~/org/gtd/calendar.org" "Calendar")
                                  "* %i%? \n %U")))
 
-  (setq org-refile-targets '(("~/org/gtd/next.org" :level . 1)
-                             ("~/org/gtd/habits.org" :maxlevel . 1)
-                             ("~/org/gtd/waiting.org" :maxlevel . 1)
-                             ("~/org/gtd/projects.org" :maxlevel . 2)
-                             ("~/org/gtd/calendar.org" :maxlevel . 2)
-                             ("~/org/gtd/someday.org" :level . 1)
-                             ("~/org/gtd/done.org" :level . 1)))
-
-  (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
   (setq org-log-done 'time)
   (setq org-agenda-custom-commands
         '(("n" "Next" tags-todo "next"
            ((org-agenda-overriding-header "Next Action")))
           ("i" "Inbox" tags-todo "inbox"
            ((org-agenda-overriding-header "Inboxk tasks")))
-          ("h" "Code" tags-todo "habit"
+          ("h" "Habits" tags-todo "habit"
            ((org-agenda-overriding-header "Habit tasks")))
           ("c" "Code" tags-todo "code"
            ((org-agenda-overriding-header "Code tasks")))
@@ -1076,10 +1061,54 @@ Based on the guide [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd
            ((org-agenda-overriding-header "Home TODO")))
           ("u" "Untagged" tags-todo "-{.*}"
            ((org-agenda-overriding-header "Untagged")))
+          ("o" "At home" tags-todo "@home"
+           ((org-agenda-overriding-header "At Home")))
+          ("w" "At work" tags-todo "@work"
+           ((org-agenda-overriding-header "At Work")))
+          ("e" "At Hecate" tags-todo "@hecate"
+           ((org-agenda-overriding-header "At Hecate")))
           ("f" "Fun" tags-todo "fun"
            ((org-agenda-overriding-header "Fun")))))
 #+END_SRC
-*** Custom functions
+** Files
+#+BEGIN_SRC emacs-lisp
+  (setq org-agenda-files '("~/org/gtd/inbox.org"
+                           "~/org/gtd/next.org"
+                           "~/org/gtd/habits.org"
+                           "~/org/gtd/waiting.org"
+                           "~/org/gtd/projects.org"
+                           "~/org/gtd/calendar.org"))
+
+  (setq org-refile-targets '(("~/org/gtd/next.org" :level . 1)
+                             ("~/org/gtd/habits.org" :maxlevel . 1)
+                             ("~/org/gtd/waiting.org" :maxlevel . 1)
+                             ("~/org/gtd/projects.org" :maxlevel . 2)
+                             ("~/org/gtd/calendar.org" :maxlevel . 2)
+                             ("~/org/gtd/someday.org" :level . 1)
+                             ("~/org/gtd/done.org" :level . 1)))
+#+END_SRC
+** Todo states
+#+BEGIN_SRC emacs-lisp
+  ;;(setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+
+  ;(setq org-use-fast-todo-selection t)
+
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "NEXT(n)" "PROJ(p)" "|" "DONE(d)")
+          (sequence "WAITING(w@/!)" "INACTIVE(i)" "|" "CANCELLED(c@/!)")))
+
+  ;; Custom colors for the keywords
+  (setq org-todo-keyword-faces
+        '(("TODO" :foreground "red" :weight bold)
+          ("NEXT" :foreground "yellow" :weight bold)
+          ("PROJ" :foreground "magenta" :weight bold)
+          ("DONE" :foreground "forest green" :weight bold)
+          ("WAITING" :foreground "orange" :weight bold)
+          ("INACTIVE" :foreground "grey" :weight bold)
+          ("CANCELLED" :foreground "forest green" :weight bold)
+          ("MEETING" :foreground "forest green" :weight bold)))
+#+END_SRC
+** Custom functions
 #+BEGIN_SRC emacs-lisp
 (defun my-org-agenda-skip-all-siblings-but-first ()
   "Skip all but the first non-done entry."
@@ -1097,7 +1126,8 @@ Based on the guide [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd
 (defun org-current-is-todo ()
   (string= "TODO" (org-get-todo-state)))
 #+END_SRC
-*** Modeline todo entry
+** Modeline todo entry
+An unintrusive way to add items to the inbox.
 #+BEGIN_SRC emacs-lisp
   (defun chr-add-todo ()
     (interactive)
@@ -1113,22 +1143,22 @@ Based on the guide [[https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd
 
   (global-set-key (kbd "H-t") 'chr-add-todo)
 #+END_SRC
-
-*** Keep previous easy templates
+** Keep previous easy templates
+Why learn new things when you can keep the old working? 😃
 #+begin_src emacs-lisp
   (if (> emacs-major-version 26)
       (require 'org-tempo))
 #+end_src
-*** Save after refile
+** Save after refile
 #+begin_src emacs-lisp
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
 #+end_src
-*** Additional exports
+** Additional exports
 MediaWiki export for authoring content for MediaWiki wikis.
 #+begin_src emacs-lisp
   (use-package ox-mediawiki)
 #+end_src
-*** Periodically save
+** Periodically save
 I frequently forget to save my org files which is frustrating since
 they then will not sync to my different machines.
 
@@ -1136,6 +1166,7 @@ Solve this by periodically saving all org files.
 #+BEGIN_SRC emacs-lisp
   (run-with-timer 0 (* 30 60) 'org-save-all-org-buffers)
 #+END_SRC
+* Other major modes
 ** AUCTeX
 
 #+BEGIN_SRC emacs-lisp
