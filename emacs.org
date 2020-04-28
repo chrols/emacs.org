@@ -112,6 +112,11 @@ Fonts I like:
       (set-frame-font (concat preferred-font "-" preferred-size) t t)
       (add-to-list 'default-frame-alist  (cons 'font (concat preferred-font "-" preferred-size)))))
 #+END_SRC
+
+*** Emoji font
+#+BEGIN_SRC emacs-lisp
+  (set-fontset-font t 'symbol (font-spec :family "Noto Color Emoji") nil 'prepend)
+#+END_SRC
 *** Theme
 Due to the amount of sunlight I prefer to have a lighter theme at work.
 
