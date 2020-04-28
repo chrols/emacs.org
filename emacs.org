@@ -1045,7 +1045,7 @@ Configuration and flow mostly lifted from [[https://emacs.cafe/emacs/orgmode/gtd
 
   (setq org-log-done 'time)
   (setq org-agenda-custom-commands
-        '(("n" "Next" tags-todo "next"
+        '(("n" "Next action" todo "NEXT"
            ((org-agenda-overriding-header "Next Action")))
           ("i" "Inbox" tags-todo "inbox"
            ((org-agenda-overriding-header "Inboxk tasks")))
@@ -1072,20 +1072,9 @@ Configuration and flow mostly lifted from [[https://emacs.cafe/emacs/orgmode/gtd
 #+END_SRC
 ** Files
 #+BEGIN_SRC emacs-lisp
-  (setq org-agenda-files '("~/org/gtd/inbox.org"
-                           "~/org/gtd/next.org"
-                           "~/org/gtd/habits.org"
-                           "~/org/gtd/waiting.org"
-                           "~/org/gtd/projects.org"
-                           "~/org/gtd/calendar.org"))
-
-  (setq org-refile-targets '(("~/org/gtd/next.org" :level . 1)
-                             ("~/org/gtd/habits.org" :maxlevel . 1)
-                             ("~/org/gtd/waiting.org" :maxlevel . 1)
-                             ("~/org/gtd/projects.org" :maxlevel . 2)
-                             ("~/org/gtd/calendar.org" :maxlevel . 2)
-                             ("~/org/gtd/someday.org" :level . 1)
-                             ("~/org/gtd/done.org" :level . 1)))
+  (setq org-agenda-files '("~/org/gtd/"))
+  (setq org-refile-targets '((nil :maxlevel . 9)
+                             (org-agenda-files :maxlevel . 9)))
 #+END_SRC
 ** Todo states
 #+BEGIN_SRC emacs-lisp
@@ -1165,6 +1154,12 @@ they then will not sync to my different machines.
 Solve this by periodically saving all org files.
 #+BEGIN_SRC emacs-lisp
   (run-with-timer 0 (* 30 60) 'org-save-all-org-buffers)
+#+END_SRC
+** Archive
+Archive trees with ~C-c C-x C-a~ (default org-mode keybinding)
+#+BEGIN_SRC emacs-lisp
+  (setq org-archive-location "archive/%s_archive::")
+  (defvar org-archive-file-header-format "#+FILETAGS: ARCHIVE\nArchived entries from file %s\n")
 #+END_SRC
 * Other major modes
 ** AUCTeX
