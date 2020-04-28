@@ -825,10 +825,12 @@ modifications to not introduce "uneccesary" changes.
 [[https://github.com/SavchenkoValeriy/emacs-clang-format-plus][clang-format+]] makes this behavior easy.
 #+BEGIN_SRC emacs-lisp
   (use-package clang-format+
-      :hook (c++-mode c-mode)
+      :hook c-mode-common-hook
       :init
       (setq clang-format+-context (if (work-computer-p) 'modification 'buffer))
       (setq clang-format-style-option "file"))
+
+  (add-hook 'c-mode-common-hook #'clang-format+-mode)
 #+END_SRC
 ** Rust
 #+BEGIN_SRC emacs-lisp
