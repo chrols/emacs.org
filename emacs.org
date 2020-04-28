@@ -1290,3 +1290,6 @@ seperate secret.el.
 #+begin_src emacs-lisp
 (setq magit-log-margin '(t "%Y-%m-%d" magit-log-margin-width t 18))
 #+end_src
+#+begin_src emacs-lisp
+(setq lsp-file-watch-threshold (* 1000 1000))
+#+end_src
