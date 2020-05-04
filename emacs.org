@@ -1079,6 +1079,8 @@ Configuration and flow mostly lifted from [[https://emacs.cafe/emacs/orgmode/gtd
            ((org-agenda-overriding-header "At Hecate")))
           ("f" "Fun" tags-todo "fun"
            ((org-agenda-overriding-header "Fun")))))
+
+  (setq org-stuck-projects '("*/+PROJ" ("NEXT") nil ""))
 #+END_SRC
 ** Files
 #+BEGIN_SRC emacs-lisp
