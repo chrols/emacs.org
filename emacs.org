@@ -476,6 +476,10 @@ to see the current distribution.
 
 find.exe is necessary for acceptable indexing performance on Windows.
 
+Note that while using ~alien~ as indexing method Projectile will not
+apply its own filters, instead it will be up to the external tool to
+filter things (e.g .gitignore).
+
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
     :config
