@@ -1088,7 +1088,9 @@ Configuration and flow mostly lifted from [[https://emacs.cafe/emacs/orgmode/gtd
 #+END_SRC
 ** Files
 #+BEGIN_SRC emacs-lisp
-  (setq org-agenda-files '("~/org/gtd/"))
+  (setq org-agenda-files (if (work-computer-p)
+                             '("~/org/gtd" "~/org-work" "~")
+                           '("~/org/gtd/")))
   (setq org-refile-targets '((nil :maxlevel . 9)
                              (org-agenda-files :maxlevel . 9)))
 #+END_SRC
