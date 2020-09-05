@@ -1065,6 +1065,8 @@ Configuration and flow mostly lifted from [[https://emacs.cafe/emacs/orgmode/gtd
            ((org-agenda-overriding-header "Next Action")))
           ("h" "Habits" todo "HABIT"
            ((org-agenda-overriding-header "Habits")))
+          ("g" "Habits" todo "GOAL"
+           ((org-agenda-overriding-header "Goals")))
           ("c" "Code" tags-todo "code"
            ((org-agenda-overriding-header "Code tasks")))
           ("r" "R&R" tags-todo "research"
