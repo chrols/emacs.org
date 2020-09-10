@@ -1259,6 +1259,7 @@ Configuration from: [[https://www.sandeepnambiar.com/setting-up-emacs-for-c++/][
            (typescript-mode . lsp-deferred)
            (python-mode . lsp-deferred)
            (shell-mode . lsp-deferred)
+           (rust-mode . lsp-deferred)
            ;; if you want which-key integration
            (lsp-mode . lsp-enable-which-key-integration))
     :commands (lsp lsp-deferred))
