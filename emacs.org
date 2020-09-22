@@ -443,6 +443,10 @@ Magit is a great way to interact with git within Emacs. Manual available [[https
       (magit-log-current '("HEAD") (list range "-n256"))
       (setf (nth 1 magit-refresh-args) old-args)))
 #+END_SRC
+*** Margin
+#+begin_src emacs-lisp
+(setq magit-log-margin '(t "%Y-%m-%d" magit-log-margin-width t 18))
+#+end_src
 *** Performance
 Should improve Emacs performance.
 #+BEGIN_SRC emacs-lisp
@@ -1277,6 +1281,8 @@ Configuration from: [[https://www.sandeepnambiar.com/setting-up-emacs-for-c++/][
     :commands company-lsp
     :config
     (push 'company-lsp company-backends)) ;; add company-lsp as a backend
+
+  (setq lsp-file-watch-threshold (* 1000 1000))
 #+END_SRC
 ** CCLS
 [[https://github.com/MaskRay/emacs-ccls][emacs-ccls]] is a client for [[https://github.com/MaskRay/ccls][ccls]], which is a language server for C/C++.
@@ -1307,9 +1313,3 @@ seperate secret.el.
   (if (file-exists-p "~/org/emacs/secrets.org")
       (org-babel-load-file "~/org/emacs/secrets.org"))
 #+END_SRC
-#+begin_src emacs-lisp
-(setq magit-log-margin '(t "%Y-%m-%d" magit-log-margin-width t 18))
-#+end_src
-#+begin_src emacs-lisp
-(setq lsp-file-watch-threshold (* 1000 1000))
-#+end_src
