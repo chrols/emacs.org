@@ -1111,7 +1111,7 @@ Configuration and flow mostly lifted from [[https://emacs.cafe/emacs/orgmode/gtd
 ** Todo states
 #+BEGIN_SRC emacs-lisp
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n)" "PROJ(p)" "|" "DONE(d)")
+        '((sequence "TODO(t)" "NEXT(n)" "PROJ(p)" "FUN(f)" "|" "DONE(d)")
           (sequence "GOAL(g)" "|" "ACHIEVED(a)")
           (sequence "HABIT" "|" "CHECK(k)")
           (sequence "WAITING(w)" "INACTIVE(i)" "SOMEDAY(s)" "|" "CANCELLED(c)")))
@@ -1120,6 +1120,7 @@ Configuration and flow mostly lifted from [[https://emacs.cafe/emacs/orgmode/gtd
         '(("TODO" :foreground "red" :weight bold)
           ("NEXT" :foreground "yellow" :weight bold)
           ("PROJ" :foreground "magenta" :weight bold)
+          ("FUN" :foreground "purple" :weight bold)
           ("DONE" :foreground "forest green" :weight bold)
           ("HABIT" :foreground "steel blue" :weight bold)
           ("GOAL" :foreground "gold" :weight bold)
