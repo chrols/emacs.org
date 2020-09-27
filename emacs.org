@@ -452,11 +452,6 @@ Should improve Emacs performance.
 #+BEGIN_SRC emacs-lisp
   (setq vc-handled-backends nil)
 #+END_SRC
-** Neotree
-#+BEGIN_SRC emacs-lisp
-  (use-package neotree
-    :config (global-set-key [f8] 'neotree-toggle))
-#+END_SRC
 ** Which key
 After pressing a prefix key, display a pop-up with possible
 completions after a delay.
