@@ -1295,13 +1295,6 @@ Configuration from: [[https://www.sandeepnambiar.com/setting-up-emacs-for-c++/][
 
 * External
 Additional custom elisp code to load that should not be published.
-** Work setup
-Load work specific stuff that is not interesting or appropriate to
-publish from a separate file.
-#+BEGIN_SRC emacs-lisp
-  (if (work-computer-p)
-      (org-babel-load-file "~/.emacs-work.org"))
-#+END_SRC
 ** Secrets
 Stuff I do not want to be public (API-keys, etc) is placed in a
 seperate secret.el.
