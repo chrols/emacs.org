@@ -1207,44 +1207,6 @@ Archive trees with ~C-c C-x C-a~ (default org-mode keybinding)
   (use-package yaml-mode
       :mode "\\.yaml\\'")
 #+END_SRC
-* Spelling
-#+BEGIN_SRC emacs-lisp
-  (if (string-equal system-type "windows-nt")
-        (add-to-list 'exec-path "C:/msys64/mingw64/bin/"))
-
-  (setq ispell-program-name (locate-file "hunspell" exec-path exec-suffixes 'file-executable-p))
-
-  (setq ispell-local-dictionary-alist
-        '((nil
-           "[[:alpha:]]"
-           "[^[:alpha:]]"
-           "[']"
-           t
-           ("-d" "en_US")
-           nil
-           iso-8859-1)
-          ("american"
-           "[[:alpha:]]"
-           "[^[:alpha:]]"
-           "[']"
-           t
-           ("-d" "en_US")
-           nil
-           iso-8859-1)
-          ("svenska"
-           "[[:alpha:]ÅÄÖåäö]"
-           "[^[:alpha:]ÅÄÖåäö]"
-           "[']"
-           t
-           ("-d" "sv_SE")
-           nil
-           utf-8)
-          ))
-
-
-  (require 'ispell)
-#+END_SRC
-
 * LSP
 ** Common
 [[https://github.com/emacs-lsp/lsp-mode][lsp-mode]] is a client for the language server protocol. It provides
