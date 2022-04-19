@@ -27,7 +27,7 @@ install it manually with ~M-x list-packages~.
 ** Context
 #+BEGIN_SRC emacs-lisp
   (defun work-computer-p ()
-    (string= (system-name) "ubuntu-tmgcxo"))
+    (string= (system-name) "ubuntu"))
 
   (defun windows-p ()
     (eq system-type 'windows-nt))
