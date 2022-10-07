@@ -1307,18 +1307,6 @@ Configuration from: [[https://www.sandeepnambiar.com/setting-up-emacs-for-c++/][
 
   (setq lsp-file-watch-threshold (* 1000 1000))
 #+END_SRC
-** CCLS
-[[https://github.com/MaskRay/emacs-ccls][emacs-ccls]] is a client for [[https://github.com/MaskRay/ccls][ccls]], which is a language server for C/C++.
-#+BEGIN_SRC emacs-lisp
-  (use-package ccls
-      :config
-      (setq ccls-executable "ccls")
-      (setq lsp-prefer-flymake nil)
-      (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
-      :hook ((c-mode c++-mode objc-mode) .
-             (lambda () (require 'ccls) (lsp))))
-#+END_SRC
-
 * External
 Additional custom elisp code to load that should not be published.
 ** Secrets
