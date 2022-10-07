@@ -544,6 +544,13 @@ Default shortcuts: ~C-c <left>~ and ~C-c <right>~
   (winner-mode)
 #+END_SRC
 * Utility functions
+** String inflection
+#+BEGIN_SRC emacs-lisp
+(use-package string-inflection
+  :bind (:map prog-mode-map
+              ("C-M-j" .
+              string-inflection-cycle)))
+#+END_SRC
 ** Narrowing
 #+BEGIN_SRC emacs-lisp
   (defun narrow-to-paragraph (arg1 arg2)
