@@ -322,7 +322,7 @@ The hyper modifier is typically unused by most modes.
 
   ;; Function keys
   (global-set-key (kbd "H-<f5>")  '(lambda () (interactive) (find-file
-                                                          "~/projects/emacs.org/emacs.org")))
+                                                          "~/.emacs.d/emacs.org")))
 
   (global-set-key (kbd "H-<f11>")  '(lambda () (interactive) (find-file "~/org/work-todo.org")))
   (global-set-key (kbd "H-<f12>")  '(lambda () (interactive) (find-file "~/org/todo.org")))
@@ -1326,6 +1326,6 @@ Additional custom elisp code to load that should not be published.
 Stuff I do not want to be public (API-keys, etc) is placed in a
 seperate secret.el.
 #+BEGIN_SRC emacs-lisp
-  (if (file-exists-p "~/org/emacs/secrets.org")
-      (org-babel-load-file "~/org/emacs/secrets.org"))
+  (if (file-exists-p "~/.emacs.d/secrets.org")
+      (org-babel-load-file "~/.emacs.d/secrets.org"))
 #+END_SRC
