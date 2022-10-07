@@ -64,8 +64,13 @@ use-package by default skips using packages that are not installed. I
 prefer that they are installed. This behavior can be overridden by
 =:ensure nil=.
 
-~use-package~ is now provided by straight.el.
+*** Always ensure that packages are available
+#+BEGIN_SRC emacs-lisp
+  (require 'use-package-ensure)
+  (setq use-package-always-ensure t)
+#+END_SRC
 
+~use-package~ is now provided by straight.el.
 * Common configuration
 ** More GC memory
 #+BEGIN_SRC emacs-lisp
@@ -246,7 +251,6 @@ Time track my different projects
            (not (work-computer-p))
            (file-exists-p "~/.wakatime"))
       :diminish wakatime-mode
-      :ensure t
       :config
       (setq wakatime-api-key (read-wakatime-api-key))
       (when (file-exists-p "/usr/bin/wakatime")
@@ -1038,7 +1042,6 @@ Haskell mode. Mainly used for modifying my [[https://xmonad.org/][xmonad]] confi
 ** Typescript
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
-    :ensure t
     :config
     (add-hook 'typescript-mode-hook 'flycheck-mode))
 
@@ -1055,7 +1058,6 @@ Haskell mode. Mainly used for modifying my [[https://xmonad.org/][xmonad]] confi
     (company-mode +1))
 
   (use-package company
-    :ensure t
     :config
     (setq company-show-numbers t)
     (setq company-tooltip-align-annotations t)
@@ -1065,14 +1067,12 @@ Haskell mode. Mainly used for modifying my [[https://xmonad.org/][xmonad]] confi
     (global-company-mode))
 
   (use-package company-quickhelp
-    :ensure t
     :init
     (company-quickhelp-mode 1)
-    (use-package pos-tip
-      :ensure t))
+    (use-package pos-tip))
+
 
   (use-package web-mode
-    :ensure t
     :mode (("\\.html?\\'" . web-mode)
            ("\\.tsx\\'" . web-mode)
            ("\\.jsx\\'" . web-mode))
@@ -1096,14 +1096,12 @@ Haskell mode. Mainly used for modifying my [[https://xmonad.org/][xmonad]] confi
     (flycheck-add-mode 'typescript-tslint 'web-mode))
 
   (use-package typescript-mode
-    :ensure t
     :config
     (setq typescript-indent-level 4)
     (add-hook 'typescript-mode #'subword-mode))
 
   (use-package tide
     :init
-    :ensure t
     :after (typescript-mode company flycheck)
     :hook ((typescript-mode . tide-setup)
            (typescript-mode . tide-hl-identifier-mode)))
@@ -1291,7 +1289,8 @@ Configuration from: [[https://www.sandeepnambiar.com/setting-up-emacs-for-c++/][
            (lsp-mode . lsp-enable-which-key-integration))
     :commands (lsp lsp-deferred))
 
-  (use-package lsp-ui :commands lsp-ui-mode :ensure t)
+  (use-package lsp-ui
+      :commands lsp-ui-mode)
 
   (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 
@@ -1311,7 +1310,6 @@ Configuration from: [[https://www.sandeepnambiar.com/setting-up-emacs-for-c++/][
 [[https://github.com/MaskRay/emacs-ccls][emacs-ccls]] is a client for [[https://github.com/MaskRay/ccls][ccls]], which is a language server for C/C++.
 #+BEGIN_SRC emacs-lisp
   (use-package ccls
-      :ensure t
       :config
       (setq ccls-executable "ccls")
       (setq lsp-prefer-flymake nil)
