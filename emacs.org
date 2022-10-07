@@ -726,6 +726,7 @@ Configuration specific to the various programming modes.
       (setq company-idle-delay 0) ; Delay to complete
       (setq company-minimum-prefix-length 1)
       (setq company-selection-wrap-around t)
+      (setq lsp-completion-provider :capf)
       (if (display-graphic-p)
           (define-key company-active-map [tab] 'company-select-next)
         (define-key company-active-map (kbd "C-i") 'company-select-next)))
@@ -1289,12 +1290,15 @@ Configuration from: [[https://www.sandeepnambiar.com/setting-up-emacs-for-c++/][
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-mode
     ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-    :init (setq lsp-keymap-prefix "C-c n")
+    :init
+    (setq lsp-keymap-prefix "C-c n")
     :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
            (typescript-mode . lsp-deferred)
            (python-mode . lsp-deferred)
            (shell-mode . lsp-deferred)
            (rust-mode . lsp-deferred)
+           (c-mode . lsp-deferred)
+           (c++-mode . lsp-deferred)
            ;; if you want which-key integration
            (lsp-mode . lsp-enable-which-key-integration))
     :commands (lsp lsp-deferred))
@@ -1302,17 +1306,17 @@ Configuration from: [[https://www.sandeepnambiar.com/setting-up-emacs-for-c++/][
   (use-package lsp-ui
       :commands lsp-ui-mode)
 
-  (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+  (use-package lsp-ivy
+      :commands lsp-ivy-workspace-symbol)
 
-  (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+  (use-package lsp-treemacs
+      :commands lsp-treemacs-errors-list)
 
+  ;; For debugger integration
   (use-package dap-mode)
 
-  (use-package company-lsp
-    :ensure t
-    :commands company-lsp
-    :config
-    (push 'company-lsp company-backends)) ;; add company-lsp as a backend
+  ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+  (use-package dap-lldb) ;; LLDB support for C & C++
 
   (setq lsp-file-watch-threshold (* 1000 1000))
 #+END_SRC
