@@ -132,12 +132,13 @@ Some themes I like:
 - solarized
 - spacemacs
 - zenburn
+- gruvbox
 
 #+BEGIN_SRC emacs-lisp
-      (use-package material-theme
+      (use-package gruvbox-theme
           :defer t
           :init
-          (load-theme 'material t))
+          (load-theme 'gruvbox t))
 #+END_SRC
 *** Prettify symbols
 
