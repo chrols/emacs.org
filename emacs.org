@@ -27,8 +27,8 @@ install it manually with ~M-x list-packages~.
 ** Context
 #+BEGIN_SRC emacs-lisp
   (defun work-computer-p ()
-    (string= (system-name) "ubuntu"))
-
+    (not (or (string= (system-name) "athena")
+             (string= (system-name) "theseus"))))
 #+END_SRC
 ** straight.el
 #+BEGIN_SRC emacs-lisp
@@ -370,7 +370,6 @@ is set to clang.
 
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
-      :if (not (work-computer-p))
       :init  (progn (global-flycheck-mode)
                     (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
       :config (progn (add-hook 'c++-mode-hook (lambda ()
@@ -501,13 +500,6 @@ Does not appear to play well with some themes
       :if (work-computer-p)
       :config (smart-mode-line-enable))
 #+END_SRC
-** All the icons
-*** dired
-#+BEGIN_SRC emacs-lisp
-  (use-package all-the-icons-dired
-      :if (work-computer-p)
-      :init (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
-#+END_SRC
 
 ** Winner Mode
 Winner mode is a global minor mode that adds undo / redo for Emacs
@@ -621,7 +613,6 @@ Configuration specific to the various programming modes.
 *** Autocompletion
 #+BEGIN_SRC emacs-lisp
   (use-package company
-      :if (not (work-computer-p))
       :bind (:map company-active-map
                   ("C-n" . company-select-next)
                   ("C-p" . company-select-previous))
