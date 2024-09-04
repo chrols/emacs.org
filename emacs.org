@@ -29,9 +29,6 @@ install it manually with ~M-x list-packages~.
   (defun work-computer-p ()
     (string= (system-name) "ubuntu"))
 
-  (defun windows-p ()
-    (eq system-type 'windows-nt))
-
 #+END_SRC
 ** straight.el
 #+BEGIN_SRC emacs-lisp
@@ -318,9 +315,7 @@ The hyper modifier is typically unused by most modes.
 According to the Emacs [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html][conventions]] only function key f5-f9 are
 guaranteed to be free.
 #+BEGIN_SRC emacs-lisp
-  (if (windows-p)
-      (global-set-key (kbd "<f2>") 'powershell)
-    (global-set-key (kbd "<f2>") 'eshell))
+  (global-set-key (kbd "<f2>") 'eshell)
   (global-set-key (kbd "<S-f2>") 'eshell)
   (global-set-key (kbd "<f4>") 'projectile-find-other-file)
   (global-set-key (kbd "<f5>")
@@ -367,9 +362,7 @@ dependency and offers a wgrep mode.
                 (setq rg-enable-default-bindings nil)
                 (rg-define-search rg-project-cpp
                     :dir project
-                    :files "cpp")
-                (when (windows-p)
-                  (setq rg-executable "c:/bin/rg.exe"))))
+                    :files "cpp")))
 #+END_SRC
 ** Flycheck
 Add a hook to force flycheck to always use C++11 support. We use the Clang language backend so this
@@ -462,8 +455,6 @@ to see the current distribution.
 ** Projectile
 [[https://github.com/bbatsov/projectile][Projectile]] is a project interaction library for Emacs.
 
-find.exe is necessary for acceptable indexing performance on Windows.
-
 Note that while using ~alien~ as indexing method Projectile will not
 apply its own filters, instead it will be up to the external tool to
 filter things (e.g .gitignore).
@@ -474,10 +465,7 @@ filter things (e.g .gitignore).
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
     (projectile-mode +1)
     (setq projectile-completion-system 'ivy)
-    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-    (when (windows-p)
-      (setq find-program "C:/bin/find.exe")
-      (setq projectile-indexing-method 'alien)))
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 #+END_SRC
 ** ace-window
 I use a Dvorak layout so aoeu and htns are on the homerows.
@@ -623,80 +611,9 @@ This command is convenient when reading novel, documentation."
   (interactive)
   (switch-to-buffer (make-temp-name "fluff")))
 #+END_SRC
-* Windows
-Windows specific stuff.
-** Modes
-Windows specific modes
-*** PowerShell
-[[https://docs.microsoft.com/en-us/powershell/scripting/powershell-scripting][PowerShell]] mode.
-#+BEGIN_SRC emacs-lisp
-  (use-package powershell
-      :if (windows-p)
-      :mode ("\\.ps1\\'"))
-#+END_SRC
-*** AutoHotKey
-[[https://www.autohotkey.com/][AutoHotkey]] mode.
-#+BEGIN_SRC emacs-lisp
-  (use-package ahk-mode
-      :if (windows-p)
-      :mode ("\\.ahk\\'"))
-#+END_SRC
-** Paths
-
-I typically keep a C:\bin directory on Windows for stuff like ripgrep
-and other useful CLI tools.
-
-#+BEGIN_SRC emacs-lisp
-  (if (windows-p)
-      (progn
-        (setenv "PATH" (concat "C:/bin" ";" (getenv "PATH")))
-        (setq exec-path (append exec-path '("C:/bin")))))
-#+END_SRC
-
-** Use menu key as hyper
-Setup menu/app key as hyper. Ideally the Windows key could be used for
-super, but this does not work for Windows 10. According to the [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Windows-Keyboard.html][manual]]
-all Windows key combinations are intercepted by the OS before Emacs
-has a chance to intercept them.  the windows key does not seem to be
-interceptable on Windows 10.
-
-The release notes for Emacs 26.1 seems to suggest that this is a
-resolved issue but as far as I can see it is not.
-#+BEGIN_SRC emacs-lisp
-  (if (windows-p)
-      (progn
-        (setq w32-pass-apps-to-system nil)
-        (setq w32-apps-modifier 'hyper)))
-#+END_SRC
-** Open file explorer on buffer
-Open the current buffer in Windows explorer
-
-#+BEGIN_SRC emacs-lisp
-  (defun win-explorer ()
-    (interactive)
-    (if default-directory
-        (browse-url-of-file (expand-file-name default-directory))
-      (error "No `default-directory' to open")))
-
-  (global-set-key (kbd "C-x w") 'win-explorer)
-#+END_SRC
 ** dired
-Sort directories first. dired uses ls on *NIX and will respect the switches but on Windows we need
-to instruct the lisp replacement to sort the directories first.
 #+BEGIN_SRC emacs-lisp
-  (when (eq system-type 'windows-nt)
-    (setq ls-lisp-dirs-first t))
-
-  (when (eq system-type 'gnu/linux)
-    (setq dired-listing-switches "-lXGh --group-directories-first"))
-#+END_SRC
-** GNU Global (gtags)
-If I am on Windows and not in a work context gtags will be unavailable by default. Add [[https://www.gnu.org/software/global/][GNU Global]] to path.
-#+BEGIN_SRC emacs-lisp
-  (when (and (windows-p) (not (work-computer-p)))
-    (setq load-path (cons "C:/bin/gtags/share/gtags/" load-path))
-    (autoload 'gtags-mode "gtags" "" t)
-    (setq gtags-global-command "c:/bin/gtags/bin/global.exe"))
+  (setq dired-listing-switches "-lXGh --group-directories-first")
 #+END_SRC
 * Programming modes
 Configuration specific to the various programming modes.
