@@ -843,55 +843,6 @@ Use regular clang-format if on personal machines.
       :init
       (setq clang-format-style-option "file"))
 #+END_SRC
-** Rust
-#+BEGIN_SRC emacs-lisp
-  ;; rust-mode, racer, cargo
-
-  ;; rust-mode
-  ;; https://github.com/rust-lang/rust-mode
-  (unless (work-computer-p)
-    (use-package rust-mode
-        ;; .rs extension collides with non-rust files at work
-        :mode ("\\.rs\\'")
-        :bind ( :map rust-mode-map
-                     (("C-c C-t" . racer-describe)))
-        :config
-        (progn
-          (message "I AM LOADING!")
-          ;; add flycheck support for rust
-          ;; https://github.com/flycheck/flycheck-rust
-          (use-package flycheck-rust)
-
-          ;; cargo-mode for all the cargo related operations
-          ;; https://github.com/kwrooijen/cargo.el
-          (use-package cargo)
-
-          ;; racer-mode for getting IDE like features for rust-mode
-          ;; https://github.com/racer-rust/emacs-racer
-          (use-package racer
-              :config
-            (progn
-              ;; set racer rust source path environment variable
-              (setq racer-rust-src-path (getenv "RUST_SRC_PATH"))
-              (defun my-racer-mode-hook ()
-                (set (make-local-variable 'company-backends)
-                     '((company-capf company-files))))
-
-              ;; enable company and eldoc minor modes in rust-mode
-              (add-hook 'racer-mode-hook 'company-mode)
-              (add-hook 'racer-mode-hook 'eldoc-mode)))
-
-          (add-hook 'rust-mode-hook 'flycheck-mode)
-          (add-hook 'flycheck-mode-hook 'flycheck-rust-setup)
-          (add-hook 'rust-mode-hook 'racer-mode)
-          (add-hook 'rust-mode-hook 'cargo-minor-mode)
-
-          ;; format rust buffers on save using rustfmt
-          (add-hook 'before-save-hook
-                    (lambda ()
-                      (when (eq major-mode 'rust-mode)
-                        (rust-format-buffer)))))))
-
 #+END_SRC
 ** Python
 *** IDE
@@ -959,82 +910,6 @@ Use regular clang-format if on personal machines.
 (add-hook 'projectile-after-switch-project-hook 'pyenv-activate-current-project)
 
 ;;; base-python.el ends here
-#+END_SRC
-** Golang
-#+BEGIN_SRC emacs-lisp
-(use-package go-mode
-  :config
-  ; Use goimports instead of go-fmt
-  (setq gofmt-command "goimports")
-  (add-hook 'go-mode-hook 'company-mode)
-  ;; Call Gofmt before saving
-  (add-hook 'before-save-hook 'gofmt-before-save)
-  (add-hook 'go-mode-hook 'setup-go-mode-compile)
-  (add-hook 'go-mode-hook #'smartparens-mode)
-  (add-hook 'go-mode-hook '(lambda ()
-			     (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
-  (add-hook 'go-mode-hook '(lambda ()
-			     (local-set-key (kbd "C-c C-g") 'go-goto-imports)))
-  (add-hook 'go-mode-hook (lambda ()
-			    (set (make-local-variable 'company-backends) '(company-go))
-			    (company-mode))))
-
-(use-package company-go
-  :after go-mode
-  :config
-  (setq tab-width 4)
-
-  :bind (:map go-mode-map
-  ; Godef jump key binding
-  ("M-." . godef-jump)))
-
-(use-package flymake-go)
-
-(use-package go-eldoc
-  :config
-  (add-hook 'go-mode-hook 'go-eldoc-setup))
-
-(defun setup-go-mode-compile ()
-  ; Customize compile command to run go build
-  (if (not (string-match "go" compile-command))
-      (set (make-local-variable 'compile-command)
-           "go build -v && go test -v && go vet")))
-
-
-#+END_SRC
-** Haskell
-Haskell mode. Mainly used for modifying my [[https://xmonad.org/][xmonad]] configuration.
-#+BEGIN_SRC emacs-lisp
-  (use-package haskell-mode
-    ;; haskell-mode swaps `C-m' and `C-j' behavior. Revert it back
-    :mode ("\\.hs\\'")
-    :bind (:map haskell-mode-map
-                ("C-m" . newline)
-                ("C-j" . electric-newline-and-maybe-indent))
-    :config
-    (defun my-haskell-mode-hook ()
-      "Hook for `haskell-mode'."
-      (set (make-local-variable 'company-backends)
-           '((company-intero company-files))))
-    (add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
-    (add-hook 'haskell-mode-hook 'company-mode)
-    (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
-
-    ;; intero-mode for a complete IDE solution to haskell
-    ;; commercialhaskell.github.io/intero
-    (use-package intero
-      :config (add-hook 'haskell-mode-hook 'intero-mode))
-
-    ;; hindent - format haskell code automatically
-    ;; https://github.com/chrisdone/hindent
-    (when (executable-find "hindent")
-      (use-package hindent
-        :diminish hindent-mode
-        :config
-        (add-hook 'haskell-mode-hook #'hindent-mode)
-        ;; reformat the buffer using hindent on save
-        (setq hindent-reformat-buffer-on-save t))))
-
 #+END_SRC
 
 ** Typescript
