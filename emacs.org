@@ -238,33 +238,6 @@ Keep custom settings in a separate file.
 (bind-key "C-x p" 'pop-to-mark-command)
 (setq set-mark-command-repeat-pop t)
 #+END_SRC
-** Wakatime
-Time track my different projects
-#+BEGIN_SRC emacs-lisp
-  (defun read-wakatime-api-key ()
-    "Read the wakatime api key from .wakatime"
-    (with-temp-buffer
-      (insert-file-contents-literally "~/.wakatime")
-      (string-trim (buffer-substring-no-properties (point-min) (point-max)))))
-
-  (use-package wakatime-mode
-      :if (and
-           (not (work-computer-p))
-           (file-exists-p "~/.wakatime"))
-      :diminish wakatime-mode
-      :config
-      (setq wakatime-api-key (read-wakatime-api-key))
-      (when (file-exists-p "/usr/bin/wakatime")
-        (setq wakatime-cli-path "/usr/bin/wakatime"))
-      (when (file-exists-p "/usr/local/bin/wakatime")
-        (setq wakatime-cli-path "/usr/local/bin/wakatime"))
-      (global-wakatime-mode))
-
-  (if (and (not (work-computer-p))
-           (not (file-exists-p "~/.wakatime")))
-      (warn "Wakatime API key file not found"))
-
-#+END_SRC
 * Shortcuts
 Global shortcuts I find handy. The Emacs [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html][convention]] reserves ~C-c
 [letter]~ and function keys F5 to F9 for user configuration. However
