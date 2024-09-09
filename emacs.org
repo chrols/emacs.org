@@ -103,19 +103,33 @@ The week begins on Monday as is proper, and I prefer dates in English.
   (setq system-time-locale "C")
 #+END_SRC
 *** Font
-Fonts I like:
-
-- Iosevka
-- Inconsolata
-- PragmataPro
-- Cantarell (not fixed width)
-
+Define an interactive utility function for setting the font and set a default font
 #+BEGIN_SRC emacs-lisp
-  (let ((preferred-font "PragmataPro")
-        (preferred-size "12"))
-    (when (member preferred-font (font-family-list))
-      (set-frame-font (concat preferred-font "-" preferred-size) t t)
-      (add-to-list 'default-frame-alist  (cons 'font (concat preferred-font "-" preferred-size)))))
+  (defun chr-set-font-full (preferred-font preferred-size)
+    (if (member preferred-font (font-family-list))
+        (progn
+          (set-frame-font (concat preferred-font "-" preferred-size) t t)
+          (add-to-list 'default-frame-alist  (cons 'font (concat preferred-font "-" preferred-size))))
+      (message "Did not find font: %S" preferred-font)))
+
+  ; Fonts I like
+  (defvar chr-good-fonts '(
+                           "Cantarell - 12"
+                           "Inconsolata - 12"
+                           "Inter - 10"
+                           "Iosevka - 12"
+                           "Less Perfect DOS VGA - 12"
+                           "Noto Mono - 12"
+                           "PragmataPro - 12"
+                           ))
+  (defun chr-set-font ()
+    (interactive)
+    (let* ((chosen (completing-read "Font" chr-good-fonts))
+           (args (split-string chosen " - ")))
+      (chr-set-font-full (nth 0 args) (nth 1 args))))
+
+  ; Default
+  (chr-set-font-full "Less Perfect DOS VGA" "12")
 #+END_SRC
 
 *** Emoji font
