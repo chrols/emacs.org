@@ -348,7 +348,7 @@ undo-tree is a great way to interact with Emacs' undo history.
       :config (progn
                 (global-undo-tree-mode 1)
                 ;; Prevent undo tree files from polluting your git repo
-                (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
+                (setf undo-tree-auto-save-history nil)
                 (setq undo-tree-visualizer-timestamps t)))
 
 #+END_SRC
