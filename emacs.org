@@ -736,6 +736,11 @@ Use regular clang-format if on personal machines.
   :ensure t
   :mode ("CMakeLists.txt" "\\.cmake"))
 #+END_SRC
+*** Rainbow-delimters
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+      :hook (c-mode-common . rainbow-delimiters-mode))
+#+end_src
 ** Python
 *** IDE
 #+BEGIN_SRC emacs-lisp
