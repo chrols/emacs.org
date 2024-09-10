@@ -730,6 +730,11 @@ Use regular clang-format if on personal machines.
       :init
       (setq clang-format-style-option "file"))
 #+END_SRC
+*** CMake
+#+BEGIN_SRC emacs-lisp
+(use-package cmake-mode
+  :ensure t
+  :mode ("CMakeLists.txt" "\\.cmake"))
 #+END_SRC
 ** Python
 *** IDE
