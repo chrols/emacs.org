@@ -700,17 +700,9 @@ modifications to not introduce "uneccesary" changes.
 Use regular clang-format if on personal machines.
 #+BEGIN_SRC emacs-lisp
   (use-package clang-format+
-      :if (work-computer-p)
-      :hook c-mode-common-hook
+      :hook c-mode-common
       :init
       (setq clang-format+-context (if (work-computer-p) 'modification 'buffer))
-      (setq clang-format-style-option "file"))
-
-  (use-package clang-format
-      :if (not (work-computer-p))
-      :hook c-mode-common-hook
-      :commands clang-format-buffer
-      :init
       (setq clang-format-style-option "file"))
 #+END_SRC
 *** CMake
