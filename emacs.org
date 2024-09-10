@@ -256,9 +256,11 @@ to my knoledge very few modes make any use of the ~hyper~ and ~super~
 modifiers.
 ** C-c
 #+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-c f") 'projectile-find-file)
   (global-set-key (kbd "C-c a") 'org-agenda)
   (global-set-key (kbd "C-c u") 'ace-jump-mode)
   (global-set-key (kbd "C-c l")  'org-store-link)
+  (global-set-key (kbd "C-c <f5>")  '(lambda () (interactive) (find-file "~/emacs.org/emacs.org")))
 #+END_SRC
 ** Kill this buffer
 Typically I have focus on the buffer I want to kill.
@@ -276,52 +278,27 @@ Typically I have focus on the buffer I want to kill.
 ** Hyper
 The hyper modifier is typically unused by most modes.
 #+BEGIN_SRC emacs-lisp
-  ;; Left home row
   (global-set-key (kbd "H-a") 'rg-project)
   (global-set-key (kbd "H-o") 'projectile-find-file)
   (global-set-key (kbd "H-u") 'ace-jump-mode)
   (global-set-key (kbd "H-i") 'org-capture)
-
-  ;; Right home row
   (global-set-key (kbd "H-n") 'flycheck-next-error)
   (global-set-key (kbd "H-s") 'ff-find-other-file)
-
-  ;; Upper right row
-  (global-set-key (kbd "H-f") 'find-file-at-point)
   (global-set-key (kbd "H-g") my-counsel-map)
   (global-set-key (kbd "H-r") '(lambda () (interactive) (compile "make -k")))
-
-  ;; Lower left row
   (global-set-key (kbd "H-k") 'kill-this-buffer)
-
-  ;; Lower right row
-  (global-set-key (kbd "H-f") 'next-buffer) ;; Overwrites find-file-at-point
+  (global-set-key (kbd "H-f") 'next-buffer)
   (global-set-key (kbd "H-b") 'previous-buffer)
   (global-set-key (kbd "H-z") 'zone)
-
-  ;; Hyper space
-  (global-set-key (kbd "H-SPC") 'hippie-expand)
-
-  (global-set-key (kbd "<f1>")  'hide/show-comments-toggle)
-
-  ;; Function keys
-  (global-set-key (kbd "H-<f5>")  '(lambda () (interactive) (find-file
-                                                          "~/.emacs.d/emacs.org")))
-
-  (global-set-key (kbd "H-<f11>")  '(lambda () (interactive) (find-file "~/org/work-todo.org")))
-  (global-set-key (kbd "H-<f12>")  '(lambda () (interactive) (find-file "~/org/todo.org")))
 #+END_SRC
 ** Function keys
 According to the Emacs [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html][conventions]] only function key f5-f9 are
 guaranteed to be free.
 #+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "<f1>")  'hide/show-comments-toggle)  
   (global-set-key (kbd "<f2>") 'eshell)
-  (global-set-key (kbd "<S-f2>") 'eshell)
   (global-set-key (kbd "<f4>") 'projectile-find-other-file)
-  (global-set-key (kbd "<f5>")
-                  (lambda () (interactive) (if (string= (file-name-extension buffer-file-name) "cm")
-                                             (cm-compilation-interact-load)
-                                              (recompile))))
+  (global-set-key (kbd "<f5>") 'recompile)
   (global-set-key (kbd "<f11>") 'toggle-frame-fullscreen)
 #+END_SRC
 * Minor modes
