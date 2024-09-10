@@ -151,23 +151,6 @@ Some themes I like:
           :init
           (load-theme 'gruvbox t))
 #+END_SRC
-*** Prettify symbols
-
-Note that prettify-symbols-alist is buffer local
-
-#+BEGIN_SRC emacs-lisp
-    (add-hook 'c-mode-hook
-          (lambda ()
-            (mapc (lambda (pair) (push pair prettify-symbols-alist))
-         '(("lambda" . 955) ;; λ
-            ("function" . 955) ;; λ
-            ("in" . 8712) ;; ∈
-            ("!in" . 8713) ;; ∉
-            ("null" . 8709) ;; ∅ = 8709
-            (".." . 8230)))))
-
-     (global-prettify-symbols-mode 1)
-#+END_SRC
 *** Diminish
 #+BEGIN_SRC emacs-lisp
 (use-package diminish
