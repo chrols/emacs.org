@@ -111,6 +111,7 @@ Define an interactive utility function for setting the font and set a default fo
 
   ; Fonts I like
   (defvar chr-good-fonts '(
+                           "Cascadia Code - 14"
                            "Cantarell - 12"
                            "Inconsolata - 12"
                            "Inter - 10"
@@ -126,7 +127,9 @@ Define an interactive utility function for setting the font and set a default fo
       (chr-set-font-full (nth 0 args) (nth 1 args))))
 
   ; Default
-  (chr-set-font-full "Less Perfect DOS VGA" "12")
+  (if (work-computer-p)
+      (chr-set-font-full "Cascadia Code" "14")
+    (chr-set-font-full "Less Perfect DOS VGA" "12"))
 #+END_SRC
 
 *** Emoji font
