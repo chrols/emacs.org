@@ -703,8 +703,10 @@ Configuration specific to the various programming modes.
       ;; "python": What Python developers use for extension modules
       ;; "java": The default style for java-mode (see below)
       ;; "user": When you want to define your own style
-      (setq c-default-style (if (work-computer-p) "ellemtel" "linux")) ;; set style to "linux"
-      (setq c-basic-offset (if (work-computer-p) 3 4))
+      (setq c-default-style "user")
+      (setq c-basic-offset  4)
+      (setq-default indent-tabs-mode nil)
+      (setq backward-delete-char-untabify-method 'hungry)
       (setq gdb-many-windows t ;; use gdb-many-windows by default
             gdb-show-main t))
 #+END_SRC
