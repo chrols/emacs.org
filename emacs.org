@@ -75,17 +75,18 @@ prefer that they are installed. This behavior can be overridden by
 #+END_SRC
 ** Appearence
 *** Disable default fluff
-I find the menu bar of some utility when running Emacs in a window,
-which only happens on Windows.
 #+BEGIN_SRC emacs-lisp
   (toggle-scroll-bar -1)
   (add-hook 'after-make-frame-functions 'never-scroll-bars)
   (tool-bar-mode -1)
   (menu-bar-mode -1)
-  (setq inhibit-splash-screen t)
+  (setq inhibit-startup-screen t)
   (setq-default indent-tabs-mode nil)
   (setq initial-scratch-message nil)
   (column-number-mode)
+
+  (defun display-startup-echo-area-message ()
+    (message ""))
 #+END_SRC
 *** Clock
 Show a 24 hour clock on the mode line.
